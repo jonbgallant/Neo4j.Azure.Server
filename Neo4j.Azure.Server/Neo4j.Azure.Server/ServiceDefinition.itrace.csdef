@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="Neo4j.Azure.Server" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WorkerRole name="WorkerRole">
+    <ConfigurationSettings>
+      <Setting name="DiagnosticsConnectionString" />
+      <Setting name="Neo4jBlobUri" />
+      <Setting name="StorageConnectionString" />
+      <Setting name="JavaBlobUri" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="Neo4j" protocol="http" port="7474" />
+    </Endpoints>
+    <LocalResources>
+      <LocalStorage name="Neo4j" cleanOnRoleRecycle="false" sizeInMB="2000" />
+    </LocalResources>
+  </WorkerRole>
+</ServiceDefinition>

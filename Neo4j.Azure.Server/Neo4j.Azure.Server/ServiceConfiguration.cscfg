@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Neo4j.Azure.Server" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" schemaVersion="2012-10.1.8">
+  <Role name="Neo4jServerHost">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=neo4j2;AccountKey=TssPCp62gY232dcs8f+RsYn+lXzQyUPt54TTW2kXEM/FGaAJaslKyrG+RxB7kLtBqwqAgntOu01VAjb1/55ENw==" />
+      <Setting name="Storage connection string" value="DefaultEndpointsProtocol=https;AccountName=neo4j2;AccountKey=TssPCp62gY232dcs8f+RsYn+lXzQyUPt54TTW2kXEM/FGaAJaslKyrG+RxB7kLtBqwqAgntOu01VAjb1/55ENw==" />
+      <Setting name="Neo4j blob uri" value="neo4j/neo4j-community-1.8.2.zip" />
+      <Setting name="Neo4j java file name" value="jre7.zip" />
+      <Setting name="Neo4j neo4j file name" value="neo4j-community-1.8.2.zip" />
+      <Setting name="Neo4j db drive blob uri" value="neo4j/neo4j.db.vhd" />
+      <Setting name="Java blob uri" value="neo4j/jre7.zip" />
+      <Setting name="Neo4j server setting names web server port" value="org.neo4j.server.webserver.port" />
+      <Setting name="Neo4j server setting names web admin data uri" value="org.neo4j.server.webadmin.data.uri" />
+      <Setting name="Neo4j server setting names web admin management uri" value="org.neo4j.server.webadmin.management.uri" />
+      <Setting name="Neo4j server setting names database location" value="org.neo4j.server.database.location" />
+      <Setting name="Neo4j wrapper setting java command" value="wrapper.java.command" />
+      <Setting name="Neo4j server config path" value="neo4j-community-1.8.2\conf\neo4j-server.properties" />
+      <Setting name="Neo4j wrapper config path" value="neo4j-community-1.8.2\conf\neo4j-wrapper.conf" />
+      <Setting name="Neo4j log folder" value="neo4j-community-1.8.2\data\log" />
+      <Setting name="Neo4j exe path" value="neo4j-community-1.8.2\bin\Neo4j.bat" />
+      <Setting name="Neo4j logs blob container" value="neofourjlogs" />
+      <Setting name="Neo4j Admin Uri" value="http://localhost:%%port%%/db/manage/" />
+      <Setting name="Java exe path" value="jre7\bin\java.exe" />
+      <Setting name="Java home path" value="jre7" />
+      <Setting name="Neo4j Data Uri" value="http://localhost:%%port%%/db/data/" />
+      <Setting name="Neo4j always download files" value="true" />
+      <Setting name="Neo4j db drive size" value="512" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates></Certificates>
+  </Role>
+</ServiceConfiguration>
