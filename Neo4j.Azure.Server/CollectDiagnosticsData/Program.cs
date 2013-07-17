@@ -3,6 +3,7 @@ using System.Configuration;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.Diagnostics.Management;
+using Microsoft.WindowsAzure.Storage;
 
 namespace CollectDiagnosticsData
 {
@@ -10,6 +11,7 @@ namespace CollectDiagnosticsData
 	{
 		static void Main()
 		{
+            /*
 			var accountName = ConfigurationManager.AppSettings["Cloud Diagnostics Storage Account Name"];
 			Console.WriteLine(string.Format("Cloud Diagnostics Storage Account Name: {0}", accountName));
 			var accountKey = ConfigurationManager.AppSettings["Cloud Diagnostics Storage Account Key"];
@@ -17,11 +19,16 @@ namespace CollectDiagnosticsData
 
 			var storageCredentialsAccountAndKey = new StorageCredentialsAccountAndKey(accountName, accountKey);
 			var storageAccount = new CloudStorageAccount(storageCredentialsAccountAndKey, true);
+            */
+
+            var connectionString = ConfigurationManager.AppSettings["CloudStorateAccountConnectionString"];
+
+            var storageAccount = CloudStorageAccount.Parse(connectionString);
 
 			Console.WriteLine(string.Format("Deployment ID: "));
 			var deploymentID = Console.ReadLine();
 
-			var deploymentDiagnosticManager = new DeploymentDiagnosticManager(storageAccount, deploymentID);
+            var deploymentDiagnosticManager = new DeploymentDiagnosticManager(connectionString, deploymentID);
 
 			string roleInstanceName;
 			Guid guid;

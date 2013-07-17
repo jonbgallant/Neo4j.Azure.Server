@@ -8,6 +8,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Neo4j.Azure.Server.Utils;
+using Microsoft.WindowsAzure.Storage;
 
 namespace Neo4j.Azure.Server
 {
@@ -38,11 +39,15 @@ namespace Neo4j.Azure.Server
 			DiagnosticMonitor.Start(ConfigSettings.DiagnosticsConnectionString, initialConfiguration);
 
 			RoleEnvironment.Changing += RoleEnvironmentChanging;
-			CloudStorageAccount.SetConfigurationSettingPublisher(
-					(configName, configSetter) => configSetter(RoleEnvironment.GetConfigurationSettingValue(configName))
-				);
+			
+            // this is no longer supported in 2.0
+            //CloudStorageAccount.SetConfigurationSettingPublisher(
+            //        (configName, configSetter) => 
+            //            configSetter(RoleEnvironment.GetConfigurationSettingValue(configName))
+            //    );
 
-			var storageAccount = CloudStorageAccount.FromConfigurationSetting(ConfigSettings.StorageConnectionString);
+			var storageAccount = CloudStorageAccount.Parse(
+                ConfigSettings.StorageConnectionString);
 
 			var neo4jInternalPort = paths.Neo4jPort;
 			neo4JManager.Install(paths, storageAccount, neo4jInternalPort, cloudDriveManager);

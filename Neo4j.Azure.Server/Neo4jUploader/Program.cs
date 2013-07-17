@@ -2,7 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Neo4jUploader
 {
@@ -12,8 +13,7 @@ namespace Neo4jUploader
         {
             // if running Azure locally, make sure Azure Storage Emulator has started
             CloudStorageAccount localStorageAccount =
-                CloudStorageAccount.Parse(
-                    "UseDevelopmentStorage=true");
+                CloudStorageAccount.Parse("UseDevelopmentStorage=true");
             CloudBlobClient localClient = localStorageAccount.CreateCloudBlobClient();
 
             
@@ -32,17 +32,17 @@ namespace Neo4jUploader
                     info.WaitForExit();
                 }
 
-                localClient.Timeout = TimeSpan.FromMinutes(30);
+                localClient.MaximumExecutionTime = TimeSpan.FromMinutes(30);
                 CloudBlobContainer container = localClient.GetContainerReference("neo4j");
-                container.CreateIfNotExist();
+                container.CreateIfNotExists();
                 UploadBlob(container, "jre7.zip", "binaries\\jre7.zip");
                 UploadBlob(container, "neo4j-community-1.8.2.zip", "binaries\\neo4j-community-1.8.2.zip");
             }
             else if (key == '2')
             {
-                cloudClient.Timeout = TimeSpan.FromMinutes(30);
+                cloudClient.MaximumExecutionTime = TimeSpan.FromMinutes(30);
                 CloudBlobContainer container = cloudClient.GetContainerReference("neo4j");
-                container.CreateIfNotExist();
+                container.CreateIfNotExists();
                 UploadBlob(container, "jre7.zip", "binaries\\jre7.zip");
                 UploadBlob(container, "neo4j-community-1.8.2.zip", "binaries\\neo4j-community-1.8.2.zip");
             }
@@ -50,7 +50,7 @@ namespace Neo4jUploader
  
         private static void UploadBlob(CloudBlobContainer container, string blobName, string filename)
         {
-            CloudBlob blob = container.GetBlobReference(blobName);
+            CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
  
             using (FileStream fileStream = File.OpenRead(filename))
                 blob.UploadFromStream(fileStream);

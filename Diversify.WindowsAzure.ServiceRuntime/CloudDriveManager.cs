@@ -25,7 +25,7 @@ namespace Diversify.WindowsAzure.ServiceRuntime
 
 		public string MountDrive(string storageConnectionString, string blobRelativePath, string localResourceName, int sizeInMb)
 		{
-            var account = CloudStorageAccount.FromConfigurationSetting(storageConnectionString.Replace("DefaultEndpointsProtocol=https", "DefaultEndpointsProtocol=http"));            
+            var account = CloudStorageAccount.Parse(storageConnectionString.Replace("DefaultEndpointsProtocol=https", "DefaultEndpointsProtocol=http"));            
 			var blobUri = GetBlobUri(account, blobRelativePath);
 
             var localCache = _localResourceManager.GetByConfigName(localResourceName);
@@ -42,11 +42,11 @@ namespace Diversify.WindowsAzure.ServiceRuntime
 
 		public void UnmountAll(string storageConnectionString)
 		{
-			var account = CloudStorageAccount.FromConfigurationSetting(storageConnectionString);
+			var account = CloudStorageAccount.Parse(storageConnectionString);
 			var credentials = account.Credentials;
 
 			foreach (var drive in CloudDrive.GetMountedDrives()
-																			.Select(mountedDrive => new CloudDrive(mountedDrive.Value, credentials)))
+                .Select(mountedDrive => new CloudDrive(mountedDrive.Value, credentials)))
 			{
 				drive.Unmount();
 			}
